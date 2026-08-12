@@ -8,9 +8,25 @@ function boundedText(value, maxLength) {
   return (value ?? '').trim().slice(0, maxLength);
 }
 
+function isValidIsoTimestamp(date) {
+  if (!ISO_WITH_TIMEZONE.test(date)) return false;
+
+  const [calendarDate, timeWithOffset] = date.split('T');
+  const [year, month, day] = calendarDate.split('-').map(Number);
+  const time = timeWithOffset.slice(0, timeWithOffset.endsWith('Z') ? -1 : -6);
+  const [hours, minutes, seconds = '0'] = time.split(':');
+  const numericSeconds = Number(seconds.split('.')[0]);
+  const offset = timeWithOffset.endsWith('Z') ? null : timeWithOffset.slice(-5).split(':').map(Number);
+  const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+
+  return month >= 1 && month <= 12 && day >= 1 && day <= daysInMonth
+    && Number(hours) <= 23 && Number(minutes) <= 59 && numericSeconds <= 59
+    && (!offset || (offset[0] <= 23 && offset[1] <= 59));
+}
+
 export function parseConfiguration(params) {
   const date = params.get('date')?.trim();
-  if (!date || !ISO_WITH_TIMEZONE.test(date)) {
+  if (!date || !isValidIsoTimestamp(date)) {
     return { ok: false, error: 'Add a valid event date with an explicit timezone.' };
   }
 

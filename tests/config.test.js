@@ -20,6 +20,13 @@ test('rejects missing and timezone-less date values', () => {
   );
 });
 
+test('rejects ISO-shaped but impossible calendar dates', () => {
+  assert.equal(
+    parseConfiguration(new URLSearchParams('date=2026-02-30T18:00:00Z')).ok,
+    false,
+  );
+});
+
 test('accepts UTC Z timestamps and falls back for unknown accents', () => {
   const config = parseConfiguration(
     new URLSearchParams('date=2026-12-01T18:00:00Z&accent=neon'),
