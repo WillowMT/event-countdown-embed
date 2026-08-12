@@ -63,3 +63,13 @@ test('accepts each documented accent', () => {
     );
   }
 });
+
+test('rejects unknown-local and out-of-range timezone offsets', () => {
+  for (const date of [
+    '2026-12-01T18:00:00-00:00',
+    '2026-12-01T18:00:00+14:01',
+    '2026-12-01T18:00:00+23:59',
+  ]) {
+    assert.equal(parseConfiguration(new URLSearchParams(`date=${date}`)).ok, false);
+  }
+});

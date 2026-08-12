@@ -16,12 +16,18 @@ function isValidIsoTimestamp(date) {
   const time = timeWithOffset.slice(0, timeWithOffset.endsWith('Z') ? -1 : -6);
   const [hours, minutes, seconds = '0'] = time.split(':');
   const numericSeconds = Number(seconds.split('.')[0]);
-  const offset = timeWithOffset.endsWith('Z') ? null : timeWithOffset.slice(-5).split(':').map(Number);
+  const offsetMatch = timeWithOffset.match(/([+-])(\d{2}):(\d{2})$/);
+  const offsetHours = offsetMatch ? Number(offsetMatch[2]) : null;
+  const offsetMinutes = offsetMatch ? Number(offsetMatch[3]) : null;
+  const hasUnknownLocalOffset = offsetMatch?.[1] === '-' && offsetHours === 0 && offsetMinutes === 0;
+  const hasValidOffset = !offsetMatch
+    || (!hasUnknownLocalOffset && offsetHours <= 14 && offsetMinutes <= 59
+      && (offsetHours !== 14 || offsetMinutes === 0));
   const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
 
   return month >= 1 && month <= 12 && day >= 1 && day <= daysInMonth
     && Number(hours) <= 23 && Number(minutes) <= 59 && numericSeconds <= 59
-    && (!offset || (offset[0] <= 23 && offset[1] <= 59));
+    && hasValidOffset;
 }
 
 export function parseConfiguration(params) {
@@ -49,7 +55,7 @@ export function parseConfiguration(params) {
 export function getCountdownState(targetMs, nowMs = Date.now()) {
   if (targetMs <= nowMs) return { state: 'elapsed' };
 
-  let remainingSeconds = Math.floor((targetMs - nowMs) / 1000);
+  let remainingSeconds = Math.ceil((targetMs - nowMs) / 1000);
   const days = Math.floor(remainingSeconds / 86_400);
   remainingSeconds %= 86_400;
   const hours = Math.floor(remainingSeconds / 3_600);
@@ -112,8 +118,7 @@ function renderCountdown(app, config, countdown) {
   const grid = element('section', 'countdown-grid');
   grid.setAttribute('aria-label', 'Time remaining');
   for (const [label, value] of [['Days', countdown.days], ['Hours', countdown.hours], ['Minutes', countdown.minutes], ['Seconds', countdown.seconds]]) {
-    const unit = element('time', 'countdown-unit');
-    unit.dateTime = String(value);
+    const unit = element('div', 'countdown-unit');
     unit.append(element('span', 'countdown-value', label === 'Days' ? String(value) : String(value).padStart(2, '0')));
     unit.append(element('span', 'countdown-label', label));
     grid.append(unit);

@@ -41,7 +41,7 @@ body {
 .event-title { margin: 0; font-size: clamp(1.35rem, 4vw, 2.1rem); letter-spacing: -0.035em; }
 .event-message { max-width: 58ch; margin: 0.65rem auto 0; color: #4b5870; line-height: 1.55; }
 .countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(0.5rem, 2vw, 1rem); }
-.countdown-unit { min-width: 0; padding: clamp(0.8rem, 2.5vw, 1.25rem) 0.4rem; border: 1px solid color-mix(in srgb, var(--border), white 20%); border-radius: 1rem; background: rgb(255 255 255 / 72%); }
+.countdown-unit { min-width: 0; padding: clamp(0.8rem, 2.5vw, 1.25rem) 0.4rem; border: 1px solid var(--border); border-color: color-mix(in srgb, var(--border), white 20%); border-radius: 1rem; background: rgb(255 255 255 / 72%); }
 .countdown-value { display: block; font-size: clamp(1.65rem, 7vw, 3.1rem); font-weight: 750; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.06em; }
 .countdown-label { display: block; margin-top: 0.55rem; color: #526078; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; }
 .target-date { margin: 1.35rem 0 0; color: #526078; font-size: 0.88rem; line-height: 1.45; }
