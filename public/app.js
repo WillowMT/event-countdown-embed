@@ -29,3 +29,19 @@ export function parseConfiguration(params) {
     compact: params.get('compact') === 'true',
   };
 }
+
+export function getCountdownState(targetMs, nowMs = Date.now()) {
+  if (targetMs <= nowMs) {
+    return { state: 'elapsed' };
+  }
+
+  let remainingSeconds = Math.floor((targetMs - nowMs) / 1000);
+  const days = Math.floor(remainingSeconds / 86_400);
+  remainingSeconds %= 86_400;
+  const hours = Math.floor(remainingSeconds / 3_600);
+  remainingSeconds %= 3_600;
+  const minutes = Math.floor(remainingSeconds / 60);
+  const seconds = remainingSeconds % 60;
+
+  return { state: 'counting', days, hours, minutes, seconds };
+}
