@@ -1,0 +1,61 @@
+:root {
+  color: #202b3c;
+  background: #f9f8ff;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-width: 280px;
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  background: radial-gradient(circle at top left, var(--glow, #ede9fe), transparent 42%), #fafaff;
+}
+
+.countdown-card {
+  --card: #f5f3ff;
+  --border: #dcd5ff;
+  --glow: #e9e4ff;
+  width: min(100%, 720px);
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  background: linear-gradient(145deg, #ffffff 0%, var(--card) 100%);
+  box-shadow: 0 18px 45px rgb(41 47 75 / 12%);
+  text-align: center;
+}
+
+.countdown-card[data-accent="pink"] { --card: #fff0f6; --border: #ffc9dc; --glow: #ffdce9; }
+.countdown-card[data-accent="peach"] { --card: #fff1eb; --border: #ffd2c1; --glow: #ffe0d3; }
+.countdown-card[data-accent="yellow"] { --card: #fff9df; --border: #f7dfa0; --glow: #fff0ba; }
+.countdown-card[data-accent="mint"] { --card: #ebfbf4; --border: #bdebd7; --glow: #d4f5e6; }
+.countdown-card[data-accent="blue"] { --card: #edf6ff; --border: #c4e0fa; --glow: #dceeff; }
+.countdown-card[data-accent="lavender"] { --card: #f5f3ff; --border: #dcd5ff; --glow: #e9e4ff; }
+
+.countdown-card--compact { padding: clamp(0.9rem, 3vw, 1.35rem); }
+.event-heading { margin-bottom: clamp(1.25rem, 3vw, 2rem); }
+.event-title { margin: 0; font-size: clamp(1.35rem, 4vw, 2.1rem); letter-spacing: -0.035em; }
+.event-message { max-width: 58ch; margin: 0.65rem auto 0; color: #4b5870; line-height: 1.55; }
+.countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(0.5rem, 2vw, 1rem); }
+.countdown-unit { min-width: 0; padding: clamp(0.8rem, 2.5vw, 1.25rem) 0.4rem; border: 1px solid color-mix(in srgb, var(--border), white 20%); border-radius: 1rem; background: rgb(255 255 255 / 72%); }
+.countdown-value { display: block; font-size: clamp(1.65rem, 7vw, 3.1rem); font-weight: 750; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.06em; }
+.countdown-label { display: block; margin-top: 0.55rem; color: #526078; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; }
+.target-date { margin: 1.35rem 0 0; color: #526078; font-size: 0.88rem; line-height: 1.45; }
+.status-panel { padding: 1.6rem 1rem; border-radius: 1rem; background: rgb(255 255 255 / 72%); }
+.status-panel h1 { margin: 0; font-size: clamp(1.35rem, 4vw, 2rem); }
+.status-panel p { margin: 0.75rem auto 0; color: #4b5870; line-height: 1.55; }
+.example-link { color: #243d72; font-weight: 700; overflow-wrap: anywhere; }
+a:focus-visible { outline: 3px solid #334e8d; outline-offset: 3px; border-radius: 0.25rem; }
+
+@media (max-width: 480px) {
+  body { align-items: start; }
+  .countdown-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+}
