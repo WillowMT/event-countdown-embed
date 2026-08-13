@@ -1,0 +1,45 @@
+# Event Countdown Embed
+
+> A static, URL-configured event countdown for Notion and iframe-capable web apps. No account, backend, database, cookies, or third-party assets are required.
+
+## Routes
+
+- [Countdown embed](https://event-countdown-embed.pages.dev/): render a configured event countdown.
+- [Countdown URL generator](https://event-countdown-embed.pages.dev/generator/): form for producing a valid embed URL in Bangkok time (UTC+7).
+- [Human documentation](https://github.com/WillowMT/event-countdown-embed/blob/main/README.md): setup and iframe examples.
+- [Source repository](https://github.com/WillowMT/event-countdown-embed): implementation and tests.
+
+## Configure an Embed
+
+Use the root route with URL query parameters.
+
+```text
+https://event-countdown-embed.pages.dev/?title=My%20Event&message=See%20you%20there%21&date=2027-12-01T18%3A00%3A00%2B07%3A00&accent=mint
+```
+
+| Parameter | Required | Accepted values / behavior |
+| --- | --- | --- |
+| `date` | Yes | Absolute ISO 8601 timestamp ending in `Z` or a known `±HH:MM` offset. Examples: `2027-12-01T18:00:00+07:00`, `2027-12-01T11:00:00Z`. Date-only and timezone-less values are rejected. `-00:00` and offsets beyond `±14:00` are rejected. |
+| `title` | No | Event title; default `Countdown`. |
+| `message` | No | Supporting message beneath title. |
+| `accent` | No | `lavender` (default), `mint`, `pink`, `peach`, `yellow`, or `blue`. Unknown value falls back to `lavender`. |
+| `compact` | No | Literal `true` hides title/message and reduces padding. |
+
+Text parameters are URL-encoded and rendered as plain text, never HTML.
+
+## Behavior
+
+- Displays days, hours, minutes, and seconds until the target instant.
+- Uses the viewer's local formatting only for the displayed event date; countdown calculation is based on the absolute timestamp.
+- At or after the target instant, displays: `The event has started`.
+- Invalid/missing date configuration displays a clear configuration error.
+- Static Soft Aurora design is responsive, including a 2×2 unit grid on narrow screens.
+- Designed for direct Notion embedding: paste a configured URL, then choose **Embed**.
+
+## Generator Guidance
+
+Use the generator route when creating an event link manually. It accepts date and time in Bangkok time (UTC+7), validates required date/time fields, builds the canonical URL with `+07:00`, and offers copy/preview actions.
+
+## Integration Notes
+
+The production site is static Cloudflare Pages content. It is HTTPS and intended to remain frame-embeddable. Do not assume any API, authentication, write endpoint, or persisted event state exists.
