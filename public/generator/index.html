@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Create an event countdown</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body class="generator-page">
+    <main class="generator-shell">
+      <section class="generator-card" aria-labelledby="generator-title">
+        <p class="eyebrow">EVENT COUNTDOWN</p>
+        <h1 id="generator-title">Create your countdown</h1>
+        <p class="generator-intro">Set the event details, then copy the ready-to-embed link. All times use Bangkok time (UTC+7).</p>
+
+        <form id="generator-form" class="generator-form">
+          <label>Event title <input name="title" maxlength="120" placeholder="e.g. Graduation Day" /></label>
+          <label>Short message <textarea name="message" maxlength="300" rows="3" placeholder="e.g. See you there!"></textarea></label>
+          <div class="form-grid">
+            <label>Event date <input name="date" type="date" required /></label>
+            <label>Event time <input name="time" type="time" required /></label>
+          </div>
+          <label>Pastel accent
+            <select name="accent">
+              <option value="lavender">Lavender</option><option value="mint">Mint</option><option value="pink">Pink</option><option value="peach">Peach</option><option value="yellow">Yellow</option><option value="blue">Blue</option>
+            </select>
+          </label>
+          <label class="checkbox-row"><input name="compact" type="checkbox" /> Use compact embed style</label>
+          <p id="generator-error" class="form-error" role="alert" hidden></p>
+          <button class="primary-button" type="submit">Generate countdown link</button>
+        </form>
+
+        <section id="generator-result" class="generator-result" aria-live="polite" hidden>
+          <h2>Your countdown link</h2>
+          <p>Paste this into Notion and select <strong>Embed</strong>.</p>
+          <textarea id="generated-url" aria-label="Generated countdown URL" rows="4" readonly></textarea>
+          <div class="result-actions"><button id="copy-url" class="secondary-button" type="button">Copy link</button><a id="open-preview" class="preview-link" target="_blank" rel="noopener">Open preview ↗</a></div>
+        </section>
+      </section>
+    </main>
+    <script type="module" src="../generator.js"></script>
+  </body>
+</html>
